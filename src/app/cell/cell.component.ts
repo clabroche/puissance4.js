@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
 interface Neighbors {
-  left?: CellComponent,
-  right?: CellComponent,
-  bottom?: CellComponent,
-  top?: CellComponent,
+  left?: CellComponent;
+  right?: CellComponent;
+  bottom?: CellComponent;
+  top?: CellComponent;
 }
 @Component({
   selector: 'cell',
@@ -16,8 +16,8 @@ export class CellComponent implements OnInit {
 
   active = false;
   state = new Subject();
-  x:number
-  y:number;
+  x: number;
+  y: number;
   neighbors: Neighbors = {};
   constructor() { }
 
@@ -25,10 +25,11 @@ export class CellComponent implements OnInit {
   }
 
   setActive() {
-    if(this.neighbors.bottom === undefined || this.neighbors.bottom.active === true)
+    if (this.neighbors.bottom === undefined || this.neighbors.bottom.active === true) {
       this.active = true;
-    else if (this.neighbors.bottom) {
+      this.state.next(this);
+    } else if (this.neighbors.bottom) {
       this.neighbors.bottom.setActive();
     }
-  } 
+  }
 }
