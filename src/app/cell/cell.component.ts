@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { GameService } from '../providers/game-service.service';
 
 interface Neighbors {
   left?: CellComponent;
@@ -15,11 +16,11 @@ interface Neighbors {
 export class CellComponent implements OnInit {
 
   active = false;
-  state = new Subject();
   x: number;
   y: number;
   neighbors: Neighbors = {};
-  constructor() { }
+
+  constructor(private game: GameService) { }
 
   ngOnInit() {
   }
@@ -27,7 +28,7 @@ export class CellComponent implements OnInit {
   setActive() {
     if (this.neighbors.bottom === undefined || this.neighbors.bottom.active === true) {
       this.active = true;
-      this.state.next(this);
+      this.game.turn.next(this);
     } else if (this.neighbors.bottom) {
       this.neighbors.bottom.setActive();
     }

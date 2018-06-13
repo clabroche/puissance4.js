@@ -1,1 +1,6 @@
-<ng-content selector="row"></ng-content>
+<div class="map">
+    <ng-content selector="row"></ng-content>
+</div>
+    <div class="end-game" *ngIf='game.finish'>
+        Fin!
+    </div>
