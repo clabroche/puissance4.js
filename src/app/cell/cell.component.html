@@ -1,4 +1,4 @@
 <div class="cell"
     (click)='setActive()'
-    [ngClass]="active ? 'active' : ''">
+    [ngClass]="{player1: active === 1, player2: active === 2}">
 </div>

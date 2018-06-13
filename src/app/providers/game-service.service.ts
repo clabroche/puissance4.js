@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { CellComponent } from '../cell/cell.component';
 
 @Injectable({
   providedIn: 'root'
@@ -7,10 +8,12 @@ import { Subject } from 'rxjs';
 export class GameService {
   finish = false;
   turn = new Subject();
+  currentPlayer = 1;
   constructor() {
     this.turn.subscribe((cell: CellComponent) => {
       if (this.finish) return;
       this.endGame(cell);
+      this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
     });
   }
 
@@ -23,33 +26,33 @@ export class GameService {
     let se = 0;
     let sw = 0;
     let nextCell = cell;
-    while (nextCell.neighbors.left && nextCell.neighbors.left.active) {
+    while (nextCell.neighbors.left && nextCell.neighbors.left.active === this.currentPlayer) {
       w++; nextCell = nextCell.neighbors.left;
     }
     nextCell = cell;
-    while (nextCell.neighbors.right && nextCell.neighbors.right.active) {
+    while (nextCell.neighbors.right && nextCell.neighbors.right.active === this.currentPlayer) {
       e++; nextCell = nextCell.neighbors.right;
     }
 
     nextCell = cell;
-    while (nextCell.neighbors.top && nextCell.neighbors.top.active) {
-      n++; nextCell = nextCell.neighbors.top;
+    while (nextCell.neighbors.bottom && nextCell.neighbors.bottom.active === this.currentPlayer) {
+      n++; nextCell = nextCell.neighbors.bottom;
     }
 
     nextCell = cell;
-    while (nextCell.neighbors.top && nextCell.neighbors.top.neighbors.left && nextCell.neighbors.top.neighbors.left.active) {
+    while (nextCell.neighbors.top && nextCell.neighbors.top.neighbors.left && nextCell.neighbors.top.neighbors.left.active === this.currentPlayer) {
       nw++; nextCell = nextCell.neighbors.top.neighbors.left;
     }
     nextCell = cell;
-    while (nextCell.neighbors.top && nextCell.neighbors.top.neighbors.right && nextCell.neighbors.top.neighbors.right.active) {
+    while (nextCell.neighbors.top && nextCell.neighbors.top.neighbors.right && nextCell.neighbors.top.neighbors.right.active === this.currentPlayer) {
       ne++; nextCell = nextCell.neighbors.top.neighbors.right;
     }
     nextCell = cell;
-    while (nextCell.neighbors.bottom && nextCell.neighbors.bottom.neighbors.right && nextCell.neighbors.bottom.neighbors.right.active) {
+    while (nextCell.neighbors.bottom && nextCell.neighbors.bottom.neighbors.right && nextCell.neighbors.bottom.neighbors.right.active === this.currentPlayer) {
       se++; nextCell = nextCell.neighbors.bottom.neighbors.right;
     }
     nextCell = cell;
-    while (nextCell.neighbors.bottom && nextCell.neighbors.bottom.neighbors.left && nextCell.neighbors.bottom.neighbors.left.active) {
+    while (nextCell.neighbors.bottom && nextCell.neighbors.bottom.neighbors.left && nextCell.neighbors.bottom.neighbors.left.active === this.currentPlayer) {
       sw++; nextCell = nextCell.neighbors.bottom.neighbors.left;
     }
 
