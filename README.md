@@ -1,6 +1,11 @@
 # Puissance4
+It's a very simple puissance 4
+
+![preview](./preview.png)
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+
 
 ## Development server
 
